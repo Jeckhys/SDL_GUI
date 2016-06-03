@@ -524,7 +524,7 @@ void GUI_Input_Display(GUI_Input i)
 	if (!i->enabled)
 		return;
 
-	if (i->hover == TRUE)
+	if (i->hover == TRUE || i->focus == TRUE)
 		SDL_BlitSurface(i->color_hover, NULL, (*(i->screen)), &(i->dimensions));
 	else
 		SDL_BlitSurface(i->color_normal, NULL, (*(i->screen)), &(i->dimensions));
