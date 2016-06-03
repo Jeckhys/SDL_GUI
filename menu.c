@@ -584,8 +584,8 @@ void GUI_Menu_Display(GUI_Menu m)
 void GUI_Menu_Resize(GUI_Menu m, unsigned int width, unsigned int height)
 {
 
-	m->dimensions.w = (width > (*(m->screen))->w) ? (*(m->screen))->w : width;
-	m->dimensions.h = (height > (*(m->screen))->h) ? (*(m->screen))->h : height;
+	m->dimensions.w = (width > (unsigned int)((*(m->screen))->w)) ? (Uint16)((*(m->screen))->w) : (Uint16)(width);
+	m->dimensions.h = (height > (unsigned int)((*(m->screen))->h)) ? (Uint16)((*(m->screen))->h) : (Uint16)(height);
 
 	SDL_FreeSurface(m->menu);
 	m->menu = NULL;
