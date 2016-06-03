@@ -1,2 +1,2 @@
 # SDL_gui
-A simple GUI made with SDL
+SDL_gui is a simple GUI made with SDL (1.2)
