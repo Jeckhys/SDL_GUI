@@ -219,6 +219,21 @@ void GUI_Menu_CustomizeButtons(GUI_Menu m, const char * border_color, const char
 
 }
 
+void GUI_Menu_CustomizeButtonsTextFont(GUI_Menu m, const char * font_path, unsigned int font_size)
+{
+
+	struct s_Menu_Elem * current = m->head;
+
+	while (current)
+	{
+
+		GUI_Button_SetTextFont(current->button, font_path, font_size);
+		current = current->next;
+
+	}
+
+}
+
 void GUI_Menu_CustomizeButtonsHover(GUI_Menu m, const char * border_color, const char * content_color)
 {
 
@@ -277,6 +292,21 @@ void GUI_Menu_CustomizeButton(GUI_Menu m, int id, const char * border_color, con
 		return;
 
 	GUI_Button_SetNormalColor(current->button, border_color, content_color);
+
+}
+
+void GUI_Menu_CustomizeButtonTextFont(GUI_Menu m, int id, const char * font_path, unsigned int font_size)
+{
+
+	struct s_Menu_Elem * current = m->head;
+
+	while (current->numero != id)
+		current = current->next;
+
+	if (current == NULL)
+		return;
+
+	GUI_Button_SetTextFont(current->button, font_path, font_size);
 
 }
 

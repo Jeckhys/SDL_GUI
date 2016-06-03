@@ -15,6 +15,7 @@ void GUI_Button_SetBorderSize(GUI_Button b, int border_size);
 void GUI_Button_SetTextColor(GUI_Button b, const char * text_color);
 void GUI_Button_SetPositionFromAnchor(GUI_Button b, int x, int y, GUI_Anchor anchor);
 void GUI_Button_SetImage(GUI_Button b, const char * image_path, const char * hover_path);
+void GUI_Button_SetTextFont(GUI_Button b, const char * font_path, unsigned int font_size);
 void GUI_Button_SetHoverColor(GUI_Button b, const char * border_color, const char * button_color);
 void GUI_Button_SetNormalColor(GUI_Button b, const char * border_color, const char * button_color);
 void GUI_Button_SetText(GUI_Button b, const char * text, const char * font_path, unsigned int font_size);

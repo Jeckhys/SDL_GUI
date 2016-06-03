@@ -313,6 +313,23 @@ void GUI_Button_SetImage(GUI_Button b, const char * image_path, const char * hov
 
 }
 
+void GUI_Button_SetTextFont(GUI_Button b, const char * font_path, unsigned int font_size)
+{
+
+	assert(font_path != NULL);
+
+	if (b->text != NULL)
+		GUI_Button_SetText(b, b->text_value, font_path, font_size);
+	else
+	{
+
+		b->font_size = font_size;
+		strcpy_s(b->font_path, _countof(b->font_path), font_path);
+
+	}
+
+}
+
 void GUI_Button_SetHoverColor(GUI_Button b, const char * border_color, const char * button_color)
 {
 

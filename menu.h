@@ -10,9 +10,11 @@ GUI_Menu GUI_Menu_Init(SDL_Surface ** screen, SDL_Event * event, unsigned int bu
 void GUI_Menu_CustomizeButtonsTextColor(GUI_Menu m, const char * text_color);
 void GUI_Menu_CustomizeButtonTextColor(GUI_Menu m, int id, const char * text_color);
 void GUI_Menu_CustomizeButtons(GUI_Menu m, const char * border_color, const char * content_color);
+void GUI_Menu_CustomizeButtonsTextFont(GUI_Menu m, const char * font_path, unsigned int font_size);
 void GUI_Menu_CustomizeButtonsHover(GUI_Menu m, const char * border_color, const char * content_color);
 int GUI_Menu_CreateButton(GUI_Menu m, const char * text, const char * font_path, unsigned int font_size);
 void GUI_Menu_CustomizeButton(GUI_Menu m, int id, const char * border_color, const char * content_color);
+void GUI_Menu_CustomizeButtonTextFont(GUI_Menu m, int id, const char * font_path, unsigned int font_size);
 void GUI_Menu_CustomizeButtonHover(GUI_Menu m, int id, const char * border_color, const char * content_color);
 
 void GUI_Menu_SetEnabled(GUI_Menu m);
