@@ -4,5 +4,6 @@
 #include "button.h"
 #include "progress_bar.h"
 #include "menu.h"
+#include "input.h"
 
 #endif

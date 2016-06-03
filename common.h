@@ -24,8 +24,10 @@ typedef enum GUI_Bool { FALSE, TRUE } GUI_Bool;
 #define GUI_BUTTON_DEFAULT_CONTENT_HOVER_COLOR "BBBBBB"
 #define GUI_BUTTON_DEFAULT_TEXT_COLOR "000000"
 
+#define GUI_BUTTON_MAXSIZETEXT 256
+
 /**
- * ProgressBar defaults properties
+ * ProgressBars defaults properties
  */
 
 #define GUI_PROGRESSBAR_DEFAULT_BORDER_SIZE 1
@@ -36,11 +38,23 @@ typedef enum GUI_Bool { FALSE, TRUE } GUI_Bool;
 #define GUI_PROGRESSBAR_DEFAULT_MAXVALUE 100
 
 /**
- * Menu defaults properties
+ * Menus defaults properties
  */
 
 #define GUI_MENU_DEFAULT_BORDER_SIZE 1
 #define GUI_MENU_DEFAULT_BORDER_COLOR "000000"
 #define GUI_MENU_DEFAULT_BACKGROUND_COLOR "FFFFFF"
+
+/**
+ * Inputs defaults properties
+ */
+
+#define GUI_INPUT_DEFAULT_BORDER_SIZE 1
+#define GUI_INPUT_DEFAULT_BORDER_COLOR "000000"
+#define GUI_INPUT_DEFAULT_BACKGROUND_COLOR "BBBBBB"
+#define GUI_INPUT_DEFAULT_BACKGROUND_HOVER_COLOR "FFFFFF"
+#define GUI_INPUT_DEFAULT_TEXT_COLOR "BBBBBB"
+
+#define GUI_INPUT_MAXSIZETEXT 512
 
 #endif
