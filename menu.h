@@ -21,6 +21,7 @@ void GUI_Menu_SetEnabled(GUI_Menu m);
 void GUI_Menu_SetDisabled(GUI_Menu m);
 void GUI_Menu_SetPosition(GUI_Menu, int x, int y);
 void GUI_Menu_SetBorderSize(GUI_Menu m, unsigned int border_size);
+void GUI_Menu_SetPositionFromAnchor(GUI_Menu m, int x, int y, GUI_Anchor anchor);
 void GUI_Menu_SetColor(GUI_Menu m, const char * border_color, const char * background_color);
 
 unsigned int GUI_Menu_GetWidth(GUI_Menu m);

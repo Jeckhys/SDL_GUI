@@ -369,6 +369,40 @@ void GUI_Menu_SetBorderSize(GUI_Menu m, unsigned int border_size)
 
 }
 
+void GUI_Menu_SetPositionFromAnchor(GUI_Menu m, int x, int y, GUI_Anchor anchor)
+{
+
+	if (anchor == TOP_LEFT || (x == GUI_CENTERED && y == GUI_CENTERED))
+		GUI_Menu_SetPosition(m, GUI_CENTERED, GUI_CENTERED);
+	else
+	{
+
+		if (x == GUI_CENTERED)
+			m->dimensions.x = (Sint16)(((*(m->screen))->w - m->dimensions.w) / 2);
+		else
+		{
+
+			m->dimensions.x = (anchor == TOP_RIGHT || anchor == BOTTOM_RIGHT) ? (Sint16)((*(m->screen))->w - m->dimensions.w - x) : (Sint16)(x);
+			m->dimensions.x = (m->dimensions.x >= ((*(m->screen))->w - m->dimensions.w)) ? (Sint16)((*(m->screen))->w - m->dimensions.w) : m->dimensions.x;
+			m->dimensions.x = (m->dimensions.x < 0) ? 0 : m->dimensions.x;
+
+		}
+
+		if (y == GUI_CENTERED)
+			m->dimensions.y = (Sint16)(((*(m->screen))->h - m->dimensions.h) / 2);
+		else
+		{
+
+			m->dimensions.y = (anchor == BOTTOM_RIGHT || anchor == BOTTOM_LEFT) ? (Sint16)((*(m->screen))->h - m->dimensions.h - y) : (Sint16)(y);
+			m->dimensions.y = (m->dimensions.y >= ((*(m->screen))->h - m->dimensions.h)) ? (Sint16)((*(m->screen))->h - m->dimensions.h) : m->dimensions.y;
+			m->dimensions.y = (m->dimensions.y < 0) ? 0 : m->dimensions.y;
+
+		}
+
+	}
+
+}
+
 void GUI_Menu_SetColor(GUI_Menu m, const char * border_color, const char * background_color)
 {
 
