@@ -8,8 +8,6 @@
 
 #include "button.h"
 
-#define GUI_BUTTON_MAXSIZETEXT 256
-
 struct s_Button {
 
 	SDL_Surface ** screen;
@@ -126,10 +124,10 @@ GUI_Button GUI_Button_Init(SDL_Surface ** screen, SDL_Event * event, unsigned in
 	GUI_Button b = (GUI_Button)malloc(sizeof(struct s_Button));
 	assert(b != NULL);
 
+	assert(screen != NULL);
 	b->screen = screen;
-	assert(b->screen != NULL);
+	assert(event != NULL);
 	b->event = event;
-	assert(b->event != NULL);
 
 	b->dimensions.w = (Uint16)(width);
 	b->dimensions.h = (Uint16)(height);
