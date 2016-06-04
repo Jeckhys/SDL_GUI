@@ -48,6 +48,9 @@ static void GUI_DelLetter(GUI_Input i)
 	if(i->text_size > 0)
 		i->text_value[--i->text_size] = '\0';
 
+	if (!i->text_size)
+		strcpy_s(i->text_value, _countof(i->text_value), GUI_INPUT_DEFAULT_PLACEHOLDER);
+
 }
 
 static int GUI_GetInfValue(int a, int b)
@@ -193,11 +196,11 @@ GUI_Input GUI_Input_Init(SDL_Surface ** screen, SDL_Event * event, unsigned int 
 
 	i->text_offset = GUI_INPUT_DEFAULT_TEXT_OFFSET;
 
-	GUI_Input_SetTextFont(i, font_path, font_size);
 	GUI_Input_SetNormalColor(i, GUI_INPUT_DEFAULT_BORDER_COLOR, GUI_INPUT_DEFAULT_BACKGROUND_COLOR);
 	GUI_Input_SetHoverColor(i, GUI_INPUT_DEFAULT_BORDER_COLOR, GUI_INPUT_DEFAULT_BACKGROUND_HOVER_COLOR);
 	GUI_Input_SetBorderSize(i, GUI_INPUT_DEFAULT_BORDER_SIZE);
 	GUI_Input_SetTextColor(i, GUI_INPUT_DEFAULT_TEXT_COLOR);
+	GUI_Input_SetText(i, GUI_INPUT_DEFAULT_PLACEHOLDER, font_path, font_size);
 
 	return i;
 

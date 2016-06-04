@@ -56,6 +56,8 @@ typedef enum GUI_Bool { FALSE, TRUE } GUI_Bool;
 #define GUI_INPUT_DEFAULT_TEXT_COLOR "000000"
 #define GUI_INPUT_DEFAULT_TEXT_OFFSET 8
 
+#define GUI_INPUT_DEFAULT_PLACEHOLDER "Entrez du texte..."
+
 #define GUI_INPUT_MAXSIZETEXT 512
 
 #endif
