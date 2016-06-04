@@ -11,6 +11,7 @@ void GUI_Input_SetEnabled(GUI_Input i);
 void GUI_Input_SetDisabled(GUI_Input i);
 void GUI_Input_SetPosition(GUI_Input i, int x, int y);
 void GUI_Input_SetBorderSize(GUI_Input i, int border_size);
+void GUI_Input_SetMaxSize(GUI_Input i, unsigned int max_size);
 void GUI_Input_SetTextColor(GUI_Input i, const char * text_color);
 void GUI_Input_SetPositionFromAnchor(GUI_Input i, int x, int y, GUI_Anchor anchor);
 void GUI_Input_SetTextFont(GUI_Input i, const char * font_path, unsigned int font_size);
@@ -21,6 +22,7 @@ void GUI_Input_SetText(GUI_Input i, const char * text, const char * font_path, u
 const char * GUI_InputGetValue(GUI_Input i);
 unsigned int GUI_Input_GetWidth(GUI_Input i);
 unsigned int GUI_Input_GetHeight(GUI_Input i);
+unsigned int GUI_Input_GetMaxSize(GUI_Input i);
 unsigned int GUI_Input_GetPositionX(GUI_Input i);
 unsigned int GUI_Input_GetPositionY(GUI_Input i);
 

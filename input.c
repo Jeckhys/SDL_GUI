@@ -24,6 +24,7 @@ struct s_Input {
 	unsigned int font_size;
 	unsigned int text_size;
 	unsigned int text_offset;
+	unsigned int text_max_size;
 
 	char border_color[7];
 	char border_color_hover[7];
@@ -266,6 +267,21 @@ void GUI_Input_SetBorderSize(GUI_Input i, int border_size)
 
 }
 
+void GUI_Input_SetMaxSize(GUI_Input i, unsigned int max_size)
+{
+
+	i->text_max_size = (max_size > GUI_INPUT_MAXSIZETEXT - 1) ? GUI_INPUT_MAXSIZETEXT - 1 : max_size;
+
+	if (i->text_size > max_size)
+	{
+		i->text_size = max_size;
+		i->text_value[i->text_max_size] = '\0';
+	}
+
+	GUI_Input_SetText(i, i->text_value, i->font_path, i->font_size);
+
+}
+
 void GUI_Input_SetTextColor(GUI_Input i, const char * text_color)
 {
 
@@ -420,6 +436,13 @@ unsigned int GUI_Input_GetHeight(GUI_Input i)
 {
 
 	return i->dimensions.h;
+
+}
+
+unsigned int GUI_Input_GetMaxSize(GUI_Input i)
+{
+
+	return i->text_max_size;
 
 }
 
