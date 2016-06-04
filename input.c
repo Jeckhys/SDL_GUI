@@ -181,16 +181,16 @@ GUI_Input GUI_Input_Init(SDL_Surface ** screen, SDL_Event * event, unsigned int 
 	i->dimensions.w = (Uint16)(width);
 	i->dimensions.h = (Uint16)(height);
 
-	i->text_dimensions.x = 0;
-	i->text_dimensions.y = 0;
-	i->text_dimensions.w = (Uint16)(width - GUI_INPUT_DEFAULT_TEXT_OFFSET);
-	i->text_dimensions.h = (Uint16)(width - GUI_INPUT_DEFAULT_TEXT_OFFSET);
-
 	if (i->dimensions.w > (*screen)->w)
 		i->dimensions.w = (Uint16)((*screen)->w);
 
 	if (i->dimensions.h > (*screen)->h)
 		i->dimensions.h = (Uint16)((*screen)->h);
+
+	i->text_dimensions.x = 0;
+	i->text_dimensions.y = 0;
+	i->text_dimensions.w = (Uint16)(width - GUI_INPUT_DEFAULT_TEXT_OFFSET);
+	i->text_dimensions.h = (Uint16)(width - GUI_INPUT_DEFAULT_TEXT_OFFSET);
 
 	i->hover = FALSE;
 	i->focus = FALSE;
