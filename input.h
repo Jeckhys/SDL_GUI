@@ -18,11 +18,13 @@ void GUI_Input_SetHoverColor(GUI_Input i, const char * border_color, const char 
 void GUI_Input_SetNormalColor(GUI_Input i, const char * border_color, const char * button_color);
 void GUI_Input_SetText(GUI_Input i, const char * text, const char * font_path, unsigned int font_size);
 
+const char * GUI_InputGetValue(GUI_Input i);
 unsigned int GUI_Input_GetWidth(GUI_Input i);
 unsigned int GUI_Input_GetHeight(GUI_Input i);
 unsigned int GUI_Input_GetPositionX(GUI_Input i);
 unsigned int GUI_Input_GetPositionY(GUI_Input i);
 
+GUI_Bool GUI_Input_IsEmpty(GUI_Input i);
 GUI_Bool GUI_Input_IsEnabled(GUI_Input i);
 GUI_Bool GUI_Input_IsHovered(GUI_Input i);
 GUI_Bool GUI_Input_IsClicked(GUI_Input i);

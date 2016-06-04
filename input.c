@@ -402,6 +402,13 @@ void GUI_Input_SetText(GUI_Input i, const char * text, const char * font_path, u
 
 
 
+const char * GUI_InputGetValue(GUI_Input i)
+{
+
+	return i->text_value;
+
+}
+
 unsigned int GUI_Input_GetWidth(GUI_Input i)
 {
 
@@ -431,6 +438,13 @@ unsigned int GUI_Input_GetPositionY(GUI_Input i)
 }
 
 
+
+GUI_Bool GUI_Input_IsEmpty(GUI_Input i)
+{
+
+	return !i->text_size;
+
+}
 
 GUI_Bool GUI_Input_IsEnabled(GUI_Input i)
 {
