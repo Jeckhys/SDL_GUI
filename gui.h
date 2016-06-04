@@ -5,5 +5,6 @@
 #include "progress_bar.h"
 #include "menu.h"
 #include "input.h"
+#include "window.h"
 
 #endif

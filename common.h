@@ -5,6 +5,8 @@
  * Common enum types definitions
  */
 
+typedef enum GUI_WindowType { ASK_YES_NO, INFORMATION };
+typedef enum GUI_WindowAnswer { CLOSE, YES, NO, OK };
 typedef enum GUI_Anchor { TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT } GUI_Anchor;
 typedef enum GUI_Bool { FALSE, TRUE } GUI_Bool;
 
@@ -59,5 +61,19 @@ typedef enum GUI_Bool { FALSE, TRUE } GUI_Bool;
 #define GUI_INPUT_DEFAULT_PLACEHOLDER "Entrez du texte..."
 
 #define GUI_INPUT_MAXSIZETEXT 512
+
+/**
+ * Windows defaults properties
+ */
+
+#define GUI_WINDOW_DEFAULT_BORDER_SIZE 1
+#define GUI_WINDOW_DEFAULT_BORDER_COLOR "000000"
+#define GUI_WINDOW_DEFAULT_BACKGROUND_COLOR "FFFFFF"
+#define GUI_WINDOW_DEFAULT_HEADER_COLOR "888888"
+#define GUI_WINDOW_DEFAULT_MENU_COLOR "888888"
+#define GUI_WINDOW_DEFAULT_TEXT_COLOR "000000"
+
+#define GUI_WINDOW_DEFAULT_HEADER_PERCENT_HEIGHT 15
+#define GUI_WINDOW_DEFAULT_MENU_PERCENT_HEIGHT 15
 
 #endif
