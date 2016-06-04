@@ -412,11 +412,11 @@ void GUI_Menu_SetColor(GUI_Menu m, const char * border_color, const char * backg
 		assert(m->menu != NULL);
 	}
 
-	SDL_FillRect(m->menu, NULL, SDL_MapRGB((*(m->screen))->format, GUI_GetRedFromHex(m->border_color), GUI_GetGreenFromHex(m->border_color), GUI_GetBlueFromHex(m->border_color)));
-	SDL_FillRect(m->menu, &(m->dimensions_background), SDL_MapRGB((*(m->screen))->format, GUI_GetRedFromHex(m->background_color), GUI_GetGreenFromHex(m->background_color), GUI_GetBlueFromHex(m->background_color)));
-
 	strcpy_s(m->border_color, _countof(m->border_color), border_color);
 	strcpy_s(m->background_color, _countof(m->background_color), background_color);
+
+	SDL_FillRect(m->menu, NULL, SDL_MapRGB((*(m->screen))->format, GUI_GetRedFromHex(m->border_color), GUI_GetGreenFromHex(m->border_color), GUI_GetBlueFromHex(m->border_color)));
+	SDL_FillRect(m->menu, &(m->dimensions_background), SDL_MapRGB((*(m->screen))->format, GUI_GetRedFromHex(m->background_color), GUI_GetGreenFromHex(m->background_color), GUI_GetBlueFromHex(m->background_color)));
 
 }
 
