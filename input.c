@@ -74,8 +74,8 @@ static void GUI_AdaptTextSize(GUI_Input i)
 	if (i->text == NULL)
 		return;
 
-	if ((i->text->w + 2 * GUI_INPUT_DEFAULT_TEXT_OFFSET) > i->dimensions.w)
-		i->text_dimensions.x = (Sint16)(i->text->w - i->dimensions.w + 2 * GUI_INPUT_DEFAULT_TEXT_OFFSET);
+	if ((i->text->w + 2 * i->text_offset) > i->dimensions.w)
+		i->text_dimensions.x = (Sint16)(i->text->w - i->dimensions.w + 2 * i->text_offset);
 
 }
 
@@ -85,7 +85,7 @@ static void GUI_InputTextCenter(GUI_Input i)
 	if (i->text != NULL)
 	{
 
-		i->position_text.x = (Sint16)(i->dimensions.x + GUI_INPUT_DEFAULT_TEXT_OFFSET);
+		i->position_text.x = (Sint16)(i->dimensions.x + i->text_offset);
 		i->position_text.y = (Sint16)(i->dimensions.y + (i->dimensions.h - i->text->h) / 2);
 
 	}
@@ -95,7 +95,7 @@ static void GUI_InputTextCenter(GUI_Input i)
 static void GUI_AddLetter(GUI_Input i, Uint16 c)
 {
 
-	if (i->text_size < GUI_INPUT_MAXSIZETEXT - 1)
+	if (i->text_size < i->text_max_size - 1)
 	{
 		i->text_value[i->text_size] = (char)(c);
 		i->text_value[++i->text_size] = '\0';
@@ -196,6 +196,7 @@ GUI_Input GUI_Input_Init(SDL_Surface ** screen, SDL_Event * event, unsigned int 
 	i->enabled = TRUE;
 
 	i->text_offset = GUI_INPUT_DEFAULT_TEXT_OFFSET;
+	i->text_max_size = GUI_INPUT_MAXSIZETEXT;
 
 	GUI_Input_SetNormalColor(i, GUI_INPUT_DEFAULT_BORDER_COLOR, GUI_INPUT_DEFAULT_BACKGROUND_COLOR);
 	GUI_Input_SetHoverColor(i, GUI_INPUT_DEFAULT_BORDER_COLOR, GUI_INPUT_DEFAULT_BACKGROUND_HOVER_COLOR);
@@ -289,6 +290,13 @@ void GUI_Input_SetTextColor(GUI_Input i, const char * text_color)
 
 	if (i->text != NULL)
 		GUI_Input_SetText(i, i->text_value, i->font_path, i->font_size);
+
+}
+
+void GUI_Input_SetTextOffset(GUI_Input i, unsigned int text_offset)
+{
+
+	i->text_offset = text_offset;
 
 }
 
