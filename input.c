@@ -34,6 +34,7 @@ struct s_Input {
 
 	char text_value[GUI_INPUT_MAXSIZETEXT];
 	char font_path[512];
+	char text_placeholder[64];
 
 	GUI_Bool hover;
 	GUI_Bool focus;
@@ -50,7 +51,7 @@ static void GUI_DelLetter(GUI_Input i)
 		i->text_value[--i->text_size] = '\0';
 
 	if (!i->text_size)
-		strcpy_s(i->text_value, _countof(i->text_value), GUI_INPUT_DEFAULT_PLACEHOLDER);
+		strcpy_s(i->text_value, _countof(i->text_value), i->text_placeholder);
 
 }
 
@@ -198,11 +199,13 @@ GUI_Input GUI_Input_Init(SDL_Surface ** screen, SDL_Event * event, unsigned int 
 	i->text_offset = GUI_INPUT_DEFAULT_TEXT_OFFSET;
 	i->text_max_size = GUI_INPUT_MAXSIZETEXT;
 
+	strcpy_s(i->text_placeholder, _countof(i->text_placeholder), GUI_INPUT_DEFAULT_PLACEHOLDER);
+
 	GUI_Input_SetNormalColor(i, GUI_INPUT_DEFAULT_BORDER_COLOR, GUI_INPUT_DEFAULT_BACKGROUND_COLOR);
 	GUI_Input_SetHoverColor(i, GUI_INPUT_DEFAULT_BORDER_COLOR, GUI_INPUT_DEFAULT_BACKGROUND_HOVER_COLOR);
 	GUI_Input_SetBorderSize(i, GUI_INPUT_DEFAULT_BORDER_SIZE);
 	GUI_Input_SetTextColor(i, GUI_INPUT_DEFAULT_TEXT_COLOR);
-	GUI_Input_SetText(i, GUI_INPUT_DEFAULT_PLACEHOLDER, font_path, font_size);
+	GUI_Input_SetText(i, i->text_placeholder, font_path, font_size);
 
 	return i;
 
@@ -297,6 +300,18 @@ void GUI_Input_SetTextOffset(GUI_Input i, unsigned int text_offset)
 {
 
 	i->text_offset = text_offset;
+
+	GUI_Input_SetText(i, i->text_value, i->font_path, i->font_size);
+
+}
+
+void GUI_Input_SetPlaceholder(GUI_Input i, const char * placeholder)
+{
+
+	strcpy_s(i->text_placeholder, _countof(i->text_placeholder), placeholder);
+
+	if(!i->text_size)
+		GUI_Input_SetText(i, i->text_placeholder, i->font_path, i->font_size);
 
 }
 
