@@ -29,6 +29,7 @@ unsigned int GUI_Button_GetPositionY(GUI_Button b);
 GUI_Bool GUI_Button_IsHovered(GUI_Button b);
 GUI_Bool GUI_Button_IsClicked(GUI_Button b);
 GUI_Bool GUI_Button_IsEnabled(GUI_Button b);
+GUI_Bool GUI_Button_IsDownClicked(GUI_Button b);
 GUI_Bool GUI_Button_IsRightClicked(GUI_Button b);
 
 void GUI_Button_Display(GUI_Button b);

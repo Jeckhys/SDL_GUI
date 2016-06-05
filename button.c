@@ -508,6 +508,13 @@ GUI_Bool GUI_Button_IsEnabled(GUI_Button b)
 
 }
 
+GUI_Bool GUI_Button_IsDownClicked(GUI_Button b)
+{
+
+	return (GUI_Button_IsHovered(b) && b->event->type == SDL_MOUSEBUTTONDOWN && b->event->button.button == SDL_BUTTON_LEFT);
+
+}
+
 GUI_Bool GUI_Button_IsRightClicked(GUI_Button b)
 {
 
