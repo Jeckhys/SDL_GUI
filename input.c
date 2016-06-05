@@ -77,6 +77,8 @@ static void GUI_AdaptTextSize(GUI_Input i)
 
 	if ((i->text->w + 2 * i->text_offset) > i->dimensions.w)
 		i->text_dimensions.x = (Sint16)(i->text->w - i->dimensions.w + 2 * i->text_offset);
+	else
+		i->text_dimensions.x = 0;
 
 }
 
