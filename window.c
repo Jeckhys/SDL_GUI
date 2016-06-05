@@ -44,6 +44,8 @@ struct s_Window {
 
 	GUI_Bool enabled;
 
+	GUI_WindowType type;
+
 };
 
 
@@ -53,14 +55,14 @@ static void GUI_UpdateTextPositions(GUI_Window w)
 
 	if (w->text_header != NULL)
 	{
-		w->dimensions_text_header.x = w->dimensions.x + w->dimensions_header.x + 2 * w->buttons_header_offset;
-		w->dimensions_text_header.y = w->dimensions.y + w->dimensions_header.y + (w->dimensions_header.h - w->text_header->h) / 2;
+		w->dimensions_text_header.x = (Sint16)(w->dimensions.x + w->dimensions_header.x + 2 * w->buttons_header_offset);
+		w->dimensions_text_header.y = (Sint16)(w->dimensions.y + w->dimensions_header.y + (w->dimensions_header.h - w->text_header->h) / 2);
 	}
 
 	if (w->text_content != NULL)
 	{
-		w->dimensions_text_content.x = w->dimensions.x + w->dimensions_background.x + 2 * w->buttons_header_offset;
-		w->dimensions_text_content.y = w->dimensions.y + w->dimensions_background.y + 2 * w->buttons_header_offset;
+		w->dimensions_text_content.x = (Sint16)(w->dimensions.x + w->dimensions_background.x + 2 * w->buttons_header_offset);
+		w->dimensions_text_content.y = (Sint16)(w->dimensions.y + w->dimensions_background.y + 2 * w->buttons_header_offset);
 	}
 
 }
@@ -129,7 +131,7 @@ static SDL_Color GUI_GetColorFromHex(const char * hex)
 
 
 
-GUI_Window GUI_Window_Init(SDL_Surface ** screen, SDL_Event * event, unsigned int width, unsigned int height, GUI_Bool enabled)
+GUI_Window GUI_Window_Init(SDL_Surface ** screen, SDL_Event * event, unsigned int width, unsigned int height, GUI_WindowType type, GUI_Bool enabled)
 {
 
 	GUI_Window w = (GUI_Window)malloc(sizeof(struct s_Window));
@@ -156,6 +158,8 @@ GUI_Window GUI_Window_Init(SDL_Surface ** screen, SDL_Event * event, unsigned in
 
 	w->enabled = enabled;
 
+	w->type = type;
+
 	w->buttons_header_offset = GUI_WINDOW_DEFAULT_HEADER_OFFSET;
 
 	GUI_Window_SetColor(w, GUI_WINDOW_DEFAULT_BORDER_COLOR, GUI_WINDOW_DEFAULT_HEADER_COLOR, GUI_WINDOW_DEFAULT_BACKGROUND_COLOR, GUI_WINDOW_DEFAULT_MENU_COLOR);
@@ -163,7 +167,11 @@ GUI_Window GUI_Window_Init(SDL_Surface ** screen, SDL_Event * event, unsigned in
 
 	w->button_close = GUI_Button_Init(screen, event, w->dimensions_header.h - w->buttons_header_offset * 2, w->dimensions_header.h - w->buttons_header_offset * 2, TRUE);
 
-	w->button_1 = NULL;
+	if (type == INFORMATION)
+		w->button_1 = GUI_Button_Init(screen, event, width * 0.3, w->dimensions_menu.h - w->buttons_header_offset * 2, TRUE);
+	else
+		w->button_1 = NULL;
+
 	w->button_2 = NULL;
 
 	return w;
@@ -236,6 +244,9 @@ void GUI_Window_SetPosition(GUI_Window w, unsigned int x, unsigned int y)
 	}
 
 	GUI_Button_SetPosition(w->button_close, w->dimensions.x + w->dimensions_header.x + w->dimensions_header.w - GUI_Button_GetWidth(w->button_close) - w->buttons_header_offset, w->dimensions.y + w->dimensions_header.y + w->buttons_header_offset);
+	
+	if(w->button_1 != NULL && w->type == INFORMATION)
+		GUI_Button_SetPosition(w->button_1, w->dimensions.x + (w->dimensions_menu.w - GUI_Button_GetWidth(w->button_1)) / 2, w->dimensions.y + w->dimensions_menu.y + w->buttons_header_offset);
 
 	GUI_UpdateTextPositions(w);
 
@@ -257,10 +268,24 @@ void GUI_Window_SetFont(GUI_Window w, const char * font_path, unsigned int font_
 
 }
 
+void GUI_Window_SetButton1Color(GUI_Window w, const char * border_color, const char * button_color)
+{
+
+	GUI_Button_SetNormalColor(w->button_1, border_color, button_color);
+
+}
+
 void GUI_Window_SetButtonCloseColor(GUI_Window w, const char * border_color, const char * button_color)
 {
 
 	GUI_Button_SetNormalColor(w->button_close, border_color, button_color);
+
+}
+
+void GUI_Window_SetButton1ColorHover(GUI_Window w, const char * border_color, const char * button_color)
+{
+
+	GUI_Button_SetHoverColor(w->button_1, border_color, button_color);
 
 }
 
@@ -280,6 +305,8 @@ void GUI_Window_SetTextColor(GUI_Window w, const char * header_text_color, const
 	{
 		GUI_Button_SetText(w->button_close, "x", w->font_path, w->font_size);
 		GUI_Button_SetTextColor(w->button_close, w->header_text_color);
+		GUI_Button_SetText(w->button_1, "OK", w->font_path, w->font_size);
+		GUI_Button_SetTextColor(w->button_1, w->header_text_color);
 	}
 
 }
@@ -320,6 +347,8 @@ void GUI_Window_SetHeaderText(GUI_Window w, const char * header_text, const char
 
 	GUI_Button_SetText(w->button_close, "x", w->font_path, w->font_size);
 	GUI_Button_SetTextColor(w->button_close, w->header_text_color);
+	GUI_Button_SetText(w->button_1, "OK", w->font_path, w->font_size);
+	GUI_Button_SetTextColor(w->button_1, w->header_text_color);
 
 }
 
@@ -352,6 +381,8 @@ void GUI_Window_SetContentText(GUI_Window w, const char * content_text, const ch
 
 	GUI_Button_SetText(w->button_close, "x", w->font_path, w->font_size);
 	GUI_Button_SetTextColor(w->button_close, w->header_text_color);
+	GUI_Button_SetText(w->button_1, "OK", w->font_path, w->font_size);
+	GUI_Button_SetTextColor(w->button_1, w->header_text_color);
 
 }
 
@@ -387,11 +418,34 @@ GUI_Bool GUI_Window_IsEnabled(GUI_Window w)
 
 
 
-void GUI_Window_Display(GUI_Window w)
+GUI_WindowAnswer GUI_Window_HandleButtonInput(GUI_Window w)
 {
 
 	if (GUI_Button_IsDownClicked(w->button_close))
+	{
 		w->enabled = FALSE;
+		return CLOSE;
+	}
+
+	else if (w->type == INFORMATION)
+	{
+
+		if (GUI_Button_IsClicked(w->button_1))
+		{
+			w->enabled = FALSE;
+			return OK;
+		}
+
+	}
+
+	return NOTHING;
+
+}
+
+
+
+void GUI_Window_Display(GUI_Window w)
+{
 
 	if (!w->enabled)
 		return;
@@ -401,6 +455,12 @@ void GUI_Window_Display(GUI_Window w)
 	SDL_BlitSurface(w->text_content, NULL, *(w->screen), &(w->dimensions_text_content));
 	
 	GUI_Button_Display(w->button_close);
+
+	if (w->button_1 != NULL)
+		GUI_Button_Display(w->button_1);
+
+	if (w->button_2 != NULL)
+		GUI_Button_Display(w->button_2);
 
 }
 
@@ -413,6 +473,21 @@ void GUI_Window_Free(GUI_Window * w)
 
 	if ((*w)->window)
 		SDL_FreeSurface((*w)->window);
+
+	if ((*w)->text_header != NULL)
+		SDL_FreeSurface((*w)->text_header);
+
+	if ((*w)->text_content != NULL)
+		SDL_FreeSurface((*w)->text_content);
+
+	if ((*w)->button_close != NULL)
+		GUI_Button_Free(&((*w)->button_close));
+
+	if ((*w)->button_1 != NULL)
+		GUI_Button_Free(&((*w)->button_1));
+
+	if ((*w)->button_2 != NULL)
+		GUI_Button_Free(&((*w)->button_2));
 
 	free(*w);
 	*w = NULL;

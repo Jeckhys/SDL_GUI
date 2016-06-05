@@ -5,8 +5,8 @@
  * Common enum types definitions
  */
 
-//typedef enum GUI_WindowType { ASK_YES_NO, INFORMATION };
-//typedef enum GUI_WindowAnswer { CLOSE, YES, NO, OK };
+typedef enum GUI_WindowType { ASK_YES_NO, INFORMATION } GUI_WindowType;
+typedef enum GUI_WindowAnswer { NOTHING, CLOSE, YES, NO, OK } GUI_WindowAnswer;
 typedef enum GUI_Anchor { TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT } GUI_Anchor;
 typedef enum GUI_Bool { FALSE, TRUE } GUI_Bool;
 
