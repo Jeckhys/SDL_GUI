@@ -189,7 +189,7 @@ void GUI_Button_SetDefaultStyle(GUI_Button b)
 
 }
 
-void GUI_Button_SetPosition(GUI_Button b, int x, int y)
+void GUI_Button_SetPosition(GUI_Button b, unsigned int x, unsigned int y)
 {
 
 	if (x == GUI_CENTERED)
@@ -243,7 +243,7 @@ void GUI_Button_SetTextColor(GUI_Button b, const char * text_color)
 
 }
 
-void GUI_Button_SetPositionFromAnchor(GUI_Button b, int x, int y, GUI_Anchor anchor)
+void GUI_Button_SetPositionFromAnchor(GUI_Button b, unsigned int x, unsigned int y, GUI_Anchor anchor)
 {
 
 	if (anchor == TOP_LEFT || (x == GUI_CENTERED && y == GUI_CENTERED))
@@ -410,7 +410,7 @@ void GUI_Button_SetText(GUI_Button b, const char * text, const char * font_path,
 
 }
 
-void GUI_Button_SetPositionRelativeTo(GUI_Button b, GUI_Button ref, int offset_x, int offset_y, GUI_Anchor anchor)
+void GUI_Button_SetPositionRelativeTo(GUI_Button b, GUI_Button ref, unsigned int offset_x, unsigned int offset_y, GUI_Anchor anchor)
 {
 
 	b->dimensions.x = (anchor == TOP_LEFT || anchor == BOTTOM_LEFT) ? ref->dimensions.x - b->dimensions.w : ref->dimensions.x + ref->dimensions.w;

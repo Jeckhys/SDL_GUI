@@ -12,11 +12,11 @@ void GUI_ProgressBar_Decrease(GUI_ProgressBar pb);
 void GUI_ProgressBar_SetEnabled(GUI_ProgressBar pb);
 void GUI_ProgressBar_SetDisabled(GUI_ProgressBar pb);
 void GUI_ProgressBar_SetValue(GUI_ProgressBar pb, int value);
-void GUI_ProgressBar_SetPosition(GUI_ProgressBar pb, int x, int y);
+void GUI_ProgressBar_SetPosition(GUI_ProgressBar pb, unsigned int x, unsigned int y);
 void GUI_ProgressBar_SetMaxValue(GUI_ProgressBar pb, int max_value);
 void GUI_ProgressBar_SetMinValue(GUI_ProgressBar pb, int min_value);
 void GUI_ProgressBar_SetBorderSize(GUI_ProgressBar pb, unsigned int border_size);
-void GUI_ProgressBar_SetPositionFromAnchor(GUI_ProgressBar pb, int x, int y, GUI_Anchor anchor);
+void GUI_ProgressBar_SetPositionFromAnchor(GUI_ProgressBar pb, unsigned int x, unsigned int y, GUI_Anchor anchor);
 void GUI_ProgressBar_SetColor(GUI_ProgressBar pb, const char * border_color, const char * background_color, const char * content_color);
 
 int GUI_ProgressBar_GetValue(GUI_ProgressBar pb);

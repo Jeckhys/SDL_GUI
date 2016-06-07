@@ -229,7 +229,7 @@ void GUI_Input_SetDisabled(GUI_Input i)
 
 }
 
-void GUI_Input_SetPosition(GUI_Input i, int x, int y)
+void GUI_Input_SetPosition(GUI_Input i, unsigned int x, unsigned int y)
 {
 
 	if (x == GUI_CENTERED)
@@ -317,7 +317,7 @@ void GUI_Input_SetPlaceholder(GUI_Input i, const char * placeholder)
 
 }
 
-void GUI_Input_SetPositionFromAnchor(GUI_Input i, int x, int y, GUI_Anchor anchor)
+void GUI_Input_SetPositionFromAnchor(GUI_Input i, unsigned int x, unsigned int y, GUI_Anchor anchor)
 {
 
 	if (anchor == TOP_LEFT || (x == GUI_CENTERED && y == GUI_CENTERED))

@@ -341,7 +341,7 @@ void GUI_Menu_SetDisabled(GUI_Menu m)
 
 }
 
-void GUI_Menu_SetPosition(GUI_Menu m, int x, int y)
+void GUI_Menu_SetPosition(GUI_Menu m, unsigned int x, unsigned int y)
 {
 
 	m->dimensions.x = (x == GUI_CENTERED) ? (Sint16)(((*(m->screen))->w - m->dimensions.w) / 2) : (Sint16)(x);
@@ -369,7 +369,7 @@ void GUI_Menu_SetBorderSize(GUI_Menu m, unsigned int border_size)
 
 }
 
-void GUI_Menu_SetPositionFromAnchor(GUI_Menu m, int x, int y, GUI_Anchor anchor)
+void GUI_Menu_SetPositionFromAnchor(GUI_Menu m, unsigned int x, unsigned int y, GUI_Anchor anchor)
 {
 
 	if (anchor == TOP_LEFT || (x == GUI_CENTERED && y == GUI_CENTERED))

@@ -176,7 +176,7 @@ void GUI_ProgressBar_SetValue(GUI_ProgressBar pb, int value)
 
 }
 
-void GUI_ProgressBar_SetPosition(GUI_ProgressBar pb, int x, int y)
+void GUI_ProgressBar_SetPosition(GUI_ProgressBar pb, unsigned int x, unsigned int y)
 {
 
 	pb->dimensions.x = (x == GUI_CENTERED) ? (Sint16)(((*(pb->screen))->w - pb->dimensions.w) / 2) : (Sint16)(x);
@@ -226,7 +226,7 @@ void GUI_ProgressBar_SetBorderSize(GUI_ProgressBar pb, unsigned int border_size)
 
 }
 
-void GUI_ProgressBar_SetPositionFromAnchor(GUI_ProgressBar pb, int x, int y, GUI_Anchor anchor)
+void GUI_ProgressBar_SetPositionFromAnchor(GUI_ProgressBar pb, unsigned int x, unsigned int y, GUI_Anchor anchor)
 {
 
 	if (anchor == TOP_LEFT || (x == GUI_CENTERED && y == GUI_CENTERED))
