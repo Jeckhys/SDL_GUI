@@ -23,6 +23,8 @@ struct s_Window {
 	SDL_Rect dimensions_background;
 	SDL_Rect dimensions_text_header;
 	SDL_Rect dimensions_text_content;
+	SDL_Rect focus_position;
+	SDL_Rect window_focus_position;
 
 	GUI_Button button_close;
 	GUI_Button button_1;
@@ -42,7 +44,10 @@ struct s_Window {
 	char header_text_value[GUI_WINDOW_MAXSIZETEXT_HEADER];
 	char content_text_value[GUI_WINDOW_MAXSIZETEXT_CONTENT];
 
+	GUI_Bool hover;
+	GUI_Bool focus;
 	GUI_Bool enabled;
+	GUI_Bool dragndrop;
 
 	GUI_WindowType type;
 
@@ -156,6 +161,9 @@ GUI_Window GUI_Window_Init(SDL_Surface ** screen, SDL_Event * event, unsigned in
 	w->text_header = NULL;
 	w->text_content = NULL;
 
+	w->hover = FALSE;
+	w->focus = FALSE;
+	w->dragndrop = FALSE;
 	w->enabled = enabled;
 
 	w->type = type;
@@ -191,6 +199,13 @@ void GUI_Window_SetDisabled(GUI_Window w)
 {
 
 	w->enabled = FALSE;
+
+}
+
+void GUI_Window_SetDragnDrop(GUI_Window w, GUI_Bool dragndrop)
+{
+
+	w->dragndrop = dragndrop;
 
 }
 
@@ -416,7 +431,77 @@ GUI_Bool GUI_Window_IsEnabled(GUI_Window w)
 
 }
 
+GUI_Bool GUI_Window_IsHeaderHovered(GUI_Window w)
+{
 
+	if (!w->enabled)
+		return FALSE;
+
+	if (w->event->type == SDL_MOUSEMOTION)
+	{
+
+		int x = w->event->motion.x;
+		int y = w->event->motion.y;
+
+		if (x >= w->dimensions.x + w->dimensions_header.x && x <= (w->dimensions.x + w->dimensions_header.x + w->dimensions_header.w) &&
+			y >= w->dimensions.y + w->dimensions_header.y && y <= (w->dimensions.y + w->dimensions_header.y + w->dimensions_header.h))
+		{
+
+			if (!w->hover)
+				w->hover = TRUE;
+
+		}
+		else
+		{
+
+			if (w->hover)
+				w->hover = FALSE;
+
+		}
+
+	}
+
+	return w->hover;
+
+}
+
+
+
+void GUI_Window_HandleDragnDrop(GUI_Window w)
+{
+
+	GUI_Window_IsHeaderHovered(w);
+
+	if (w->event->type == SDL_MOUSEBUTTONDOWN && w->event->button.button == SDL_BUTTON_LEFT && w->hover)
+	{
+
+		if (!w->focus)
+		{
+
+			w->window_focus_position.x = w->dimensions.x;
+			w->window_focus_position.y = w->dimensions.y;
+
+			w->focus_position.x = w->event->motion.x;
+			w->focus_position.y = w->event->motion.y;
+
+			w->focus = TRUE;
+
+		}
+
+	}
+
+	if (w->event->type == SDL_MOUSEBUTTONUP && w->event->button.button == SDL_BUTTON_LEFT)
+	{
+
+		if (w->focus)
+			w->focus = FALSE;
+
+	}
+
+	if (w->focus && w->event->type == SDL_MOUSEMOTION)
+		GUI_Window_SetPosition(w, w->window_focus_position.x + (w->event->motion.x - w->focus_position.x), w->window_focus_position.y + (w->event->motion.y - w->focus_position.y));
+
+}
 
 GUI_WindowAnswer GUI_Window_HandleButtonInput(GUI_Window w)
 {
@@ -437,6 +522,9 @@ GUI_WindowAnswer GUI_Window_HandleButtonInput(GUI_Window w)
 		}
 
 	}
+
+	if (w->dragndrop)
+		GUI_Window_HandleDragnDrop(w);
 
 	return NOTHING;
 

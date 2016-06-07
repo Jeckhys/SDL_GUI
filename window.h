@@ -10,6 +10,7 @@ GUI_Window GUI_Window_Init(SDL_Surface ** screen, SDL_Event * event, unsigned in
 void GUI_Window_SetEnabled(GUI_Window w);
 void GUI_Window_SetDisabled(GUI_Window w);
 void GUI_Window_SetBorderSize(GUI_Window w, int border_size);
+void GUI_Window_SetDragnDrop(GUI_Window w, GUI_Bool dragndrop);
 void GUI_Window_SetPosition(GUI_Window w, unsigned int x, unsigned int y);
 void GUI_Window_SetFont(GUI_Window w, const char * font_path, unsigned int font_size);
 void GUI_Window_SetButton1Color(GUI_Window w, const char * border_color, const char * button_color);
@@ -22,7 +23,9 @@ void GUI_Window_SetContentText(GUI_Window w, const char * content_text, const ch
 void GUI_Window_SetColor(GUI_Window w, const char * border_color, const char * header_color, const char * background_color, const char * menu_color);
 
 GUI_Bool GUI_Window_IsEnabled(GUI_Window w);
+GUI_Bool GUI_Window_IsHeaderHovered(GUI_Window w);
 
+void GUI_Window_HandleDragnDrop(GUI_Window w);
 GUI_WindowAnswer GUI_Window_HandleButtonInput(GUI_Window w);
 
 void GUI_Window_Display(GUI_Window w);
