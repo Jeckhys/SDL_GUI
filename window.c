@@ -134,6 +134,43 @@ static SDL_Color GUI_GetColorFromHex(const char * hex)
 
 }
 
+static void GUI_SetTextRecursive(GUI_Window w, const char * text, int line_number)
+{
+
+	SDL_Surface * text_line = NULL;
+	SDL_Rect text_line_position;
+	SDL_Rect text_line_dimension;
+
+	TTF_Font * font = TTF_OpenFont(w->font_path, w->font_size);
+
+	int x, y, new_line_length;
+	TTF_SizeText(font, text, &x, &y);
+
+	new_line_length = x - line_number * (w->dimensions_background.w - 2 * 2 * w->buttons_header_offset);
+
+	text_line_position.x = 0;
+	text_line_position.y = (Sint16)((line_number - 1) * y);
+
+	text_line_dimension.x = (Sint16)((line_number - 1) * (w->dimensions_background.w - 2 * 2 * w->buttons_header_offset));
+	text_line_dimension.y = 0;
+	text_line_dimension.w = (new_line_length > 0) ? (Uint16)(w->dimensions_background.w - 2 * 2 * w->buttons_header_offset) : (Uint16)(x / line_number);
+	text_line_dimension.h = (Uint16)(y);
+
+	TTF_FontLineSkip(font);
+
+	text_line = TTF_RenderText_Blended(font, text, GUI_GetColorFromHex(w->content_text_color));
+	assert(w->text_content != NULL);
+	SDL_BlitSurface(text_line, &text_line_dimension, w->text_content, &text_line_position);
+
+	if (new_line_length > 0)
+		GUI_SetTextRecursive(w, text, line_number + 1);
+
+	SDL_FreeSurface(text_line);
+
+	TTF_CloseFont(font);
+
+}
+
 
 
 GUI_Window GUI_Window_Init(SDL_Surface ** screen, SDL_Event * event, unsigned int width, unsigned int height, GUI_WindowType type, GUI_Bool enabled)
@@ -176,7 +213,7 @@ GUI_Window GUI_Window_Init(SDL_Surface ** screen, SDL_Event * event, unsigned in
 	w->button_close = GUI_Button_Init(screen, event, w->dimensions_header.h - w->buttons_header_offset * 2, w->dimensions_header.h - w->buttons_header_offset * 2, TRUE);
 
 	if (type == INFORMATION)
-		w->button_1 = GUI_Button_Init(screen, event, width * 0.3, w->dimensions_menu.h - w->buttons_header_offset * 2, TRUE);
+		w->button_1 = GUI_Button_Init(screen, event, (unsigned int)(width * 0.3), w->dimensions_menu.h - w->buttons_header_offset * 2, TRUE);
 	else
 		w->button_1 = NULL;
 
@@ -384,13 +421,13 @@ void GUI_Window_SetContentText(GUI_Window w, const char * content_text, const ch
 		w->text_content = NULL;
 	}
 
-	TTF_Font * font = TTF_OpenFont(font_path, font_size);
-	assert(font != NULL);
-
-	w->text_content = TTF_RenderText_Blended(font, content_text, GUI_GetColorFromHex(w->content_text_color));
+	w->text_content = SDL_CreateRGBSurface(SDL_HWSURFACE, w->dimensions_background.w - 2 * 2 * w->buttons_header_offset, w->dimensions_background.h - 2 * 2 * w->buttons_header_offset, 32, 0, 0, 0, 0);
 	assert(w->text_content != NULL);
 
-	TTF_CloseFont(font);
+	SDL_FillRect(w->text_content, NULL, SDL_MapRGB(w->text_content->format, GUI_GetRedFromHex(w->background_color), GUI_GetGreenFromHex(w->background_color), GUI_GetBlueFromHex(w->background_color)));
+	assert(w->text_content != NULL);
+
+	GUI_SetTextRecursive(w, content_text, 1);
 
 	GUI_UpdateTextPositions(w);
 
@@ -419,6 +456,9 @@ void GUI_Window_SetColor(GUI_Window w, const char * border_color, const char * h
 	SDL_FillRect(w->window, &(w->dimensions_background), SDL_MapRGB((*(w->screen))->format, GUI_GetRedFromHex(w->background_color), GUI_GetGreenFromHex(w->background_color), GUI_GetBlueFromHex(w->background_color)));
 	SDL_FillRect(w->window, &(w->dimensions_header), SDL_MapRGB((*(w->screen))->format, GUI_GetRedFromHex(w->header_color), GUI_GetGreenFromHex(w->header_color), GUI_GetBlueFromHex(w->header_color)));
 	SDL_FillRect(w->window, &(w->dimensions_menu), SDL_MapRGB((*(w->screen))->format, GUI_GetRedFromHex(w->menu_color), GUI_GetGreenFromHex(w->menu_color), GUI_GetBlueFromHex(w->menu_color)));
+
+	if(strcmp(w->content_text_value, ""))
+		GUI_Window_SetContentText(w, w->content_text_value, w->font_path, w->font_size);
 
 }
 
