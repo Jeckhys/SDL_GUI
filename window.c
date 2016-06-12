@@ -194,6 +194,8 @@ GUI_Window GUI_Window_Init(SDL_Surface ** screen, SDL_Event * event, unsigned in
 	if (w->dimensions.h > (*screen)->h)
 		w->dimensions.h = (Uint16)((*screen)->h);
 
+	strcpy_s(w->content_text_value, _countof(w->content_text_value), "");
+
 	w->window = NULL;
 	w->text_header = NULL;
 	w->text_content = NULL;
